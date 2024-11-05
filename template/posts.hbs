@@ -1,0 +1,15 @@
+<h1>Bryan's Blog</h1>
+
+<p>Latest posts:</p>
+
+<div id="latest-posts">
+    {{#each posts}}
+    <a href="{{link}}">
+        <div class="post-preview">
+            <h4>{{title}}</h4>
+            <p>{{subtitle}}</p>
+            <i>{{date}}</i>
+        </div>
+    </a>
+    {{/each}}
+</div>
