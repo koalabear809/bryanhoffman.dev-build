@@ -1,0 +1,134 @@
+<div id="bouncy-wrapper">
+    <canvas id="bouncy"></canvas>
+    <div id="bouncy-controls">
+        <label for="num-balls">
+            Number of Balls
+            <input name="num-balls" id="num-balls" type="number" min="1" max="100" value="5">
+        </label>
+        <label for="num-balls">
+            Speed x
+            <input name="speed-x" id="speed-x" type="number" min="0.1" max="5" value="1" step="0.1">
+        </label>
+    </div>
+</div>
+
+<script>
+const canvas = document.getElementById("bouncy");
+const ctx = canvas.getContext('2d');
+let numBalls = document.getElementById('num-balls');
+let speedx = document.getElementById('speed-x');
+numBalls.onchange = () => {
+    restart();
+}
+
+speedx.onchange = () => {
+    restart();
+}
+
+//- Randomly generate number of dots in number box
+
+function generateAllDots(num) {
+    let newdots = [];
+    for(let i = 0; i < num; i++) {
+        newdots.push(generateDot());
+    }
+    return newdots;
+}
+
+function generateDot() {
+    speed_X = Math.random() * 2 * speedx.value;
+    speed_Y = Math.random() * 2 * speedx.value;
+    return {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 5,
+        speedX: speed_X,
+        speedY: speed_Y,
+        ogSpeedX: speed_X,
+        ogSpeedY: speed_Y
+    }
+}
+
+function redraw(dots) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    dots.forEach(dot => {
+        ctx.beginPath();
+        ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+        ctx.closePath();
+    });
+}
+
+function update(dots) {
+    // Update position based on speed
+    dots.forEach(dot => {
+        dot.x += dot.speedX;
+        dot.y += dot.speedY;
+
+        // Bounce off edges of canvas
+        if (dot.x + dot.radius > canvas.width || dot.x - dot.radius < 0) {
+            dot.speedX = -dot.speedX;  // Reverse direction on x-axis
+        }
+        if (dot.y + dot.radius > canvas.height || dot.y - dot.radius < 0) {
+            dot.speedY = -dot.speedY;  // Reverse direction on y-axis
+        }
+    })
+}
+
+dots = [];
+
+function start() {
+    dots = generateAllDots(numBalls.value);
+    function run() {
+        redraw(dots);
+        update(dots);
+        requestAnimationFrame(run);
+    }
+    run();
+}
+
+function updateDots(dots) {
+    if(dots.length < numBalls.value) {
+        //- Create more dots
+        for(let i = 0; i < numBalls.value - dots.length; i++){
+            dots.push(generateDot());
+        }
+    }
+
+    if(dots.length > numBalls.value) {
+        //- Delete dots off end of array
+        dots = dots.slice(0, numBalls.value);
+    }
+    return dots.map(dot => {
+        let speed_x = dot.ogSpeedX * speedx.value;
+        let speed_y = dot.ogSpeedY * speedx.value;
+        dot.speedX = dot.speedX < 0 ? -speed_x : speed_x;
+        dot.speedY = dot.speedY < 0 ? -speed_y : speed_y;
+        return dot;
+    })
+}
+
+function restart() {
+    dots = updateDots(dots);
+    function run() {
+        redraw(dots);
+        update(dots);
+        requestAnimationFrame(run);
+    }
+    run();
+}
+
+
+start();
+
+</script>
+
+<style>
+    #bouncy {
+        border: 1px solid white;
+        width: 600px;
+        height: 500px;
+    }
+</style>

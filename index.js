@@ -14,7 +14,7 @@ let posts = [
     "finish-what-you-start"
 ];
 
-let pages = ["index"];
+let pages = ["index", "bouncy"];
 
 //- Grab the layout
 let layout = fs.readFileSync(`${templates}/layout.hbs`, {encoding: 'utf8'});
