@@ -90,7 +90,7 @@ allMeta.sort((a, b) => {
     //- Convert dates to js dates
     let date1 = new Date(a.date);
     let date2 = new Date(b.date);
-    return date1 - date2;
+    return date2 - date1;
 })
 let postsPage = fs.readFileSync(`${templates}/posts.hbs`, {encoding: 'utf8'});
 postsPage = Handlebars.compile(postsPage);

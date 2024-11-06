@@ -21,3 +21,29 @@ nav a {
 #content {
     padding: 5px;
 }
+
+.post-preview {
+    padding: 5px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+#latest-posts a {
+    text-decoration: none;
+    color: white;
+}
+
+#latest-posts a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.post-preview:hover {
+    background-color: white;
+    color: black;
+}
+
+.separator {
+    border-bottom: 1px dashed white;
+}
