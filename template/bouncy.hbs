@@ -105,9 +105,7 @@ let updateDots = async () => {
 
     if(dots.length > numBalls.value) {
         //- Delete dots off end of array
-        console.log(numBalls.value);
         dots = dots.slice(0, numBalls.value);
-        console.log(dots);
     }
     return dots.map(dot => {
         let speed_x = dot.ogSpeedX * speedx.value;
