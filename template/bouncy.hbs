@@ -1,5 +1,5 @@
 <div id="bouncy-wrapper">
-    <canvas id="bouncy"></canvas>
+    <canvas id="bouncy" width="600" height="500"></canvas>
     <div id="bouncy-controls">
         <label for="num-balls">
             Number of Balls
@@ -37,14 +37,14 @@ function generateAllDots(num) {
 }
 
 function generateDot() {
-    speed_X = Math.random() * speedx.value;
-    speed_Y = Math.random() * speedx.value;
+    speed_X = Math.random();
+    speed_Y = Math.random();
     return {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
         radius: Math.random() * 5,
-        speedX: speed_X,
-        speedY: speed_Y,
+        speedX: speed_X * speedx.value,
+        speedY: speed_Y * speedx.value,
         ogSpeedX: speed_X,
         ogSpeedY: speed_Y
     }
@@ -57,6 +57,7 @@ function redraw(dots) {
         ctx.beginPath();
         ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
         ctx.fillStyle = 'white';
+        ctx.strokeStyle = 'white';
         ctx.fill();
         ctx.closePath();
     });
@@ -135,7 +136,5 @@ start();
 <style>
     #bouncy {
         border: 1px solid white;
-        width: 600px;
-        height: 500px;
     }
 </style>
