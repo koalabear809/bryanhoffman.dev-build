@@ -3,11 +3,11 @@
     <div id="bouncy-controls">
         <label for="num-balls">
             Number of Balls
-            <input name="num-balls" id="num-balls" type="range" min="1" max="100" value="5">
+            <input name="num-balls" id="num-balls" type="range" min="1" max="500" value="5">
         </label>
         <label for="speed-x">
             Speed x
-            <input name="speed-x" id="speed-x" type="range" min="0.1" max="10" value="1" step="0.1">
+            <input name="speed-x" id="speed-x" type="range" min="0.1" max="20" value="5" step="0.1">
         </label>
     </div>
 </div>
@@ -42,11 +42,12 @@ function generateDot() {
     return {
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 5,
+        radius: Math.random() * 6 + 2,
         speedX: speed_X * speedx.value,
         speedY: speed_Y * speedx.value,
         ogSpeedX: speed_X,
-        ogSpeedY: speed_Y
+        ogSpeedY: speed_Y,
+        id: crypto.randomUUID()
     }
 }
 
@@ -81,6 +82,20 @@ function update(dots) {
         if (dot.y + dot.radius > canvas.height || dot.y - dot.radius < 0) {
             dot.speedY = -dot.speedY;  // Reverse direction on y-axis
         }
+
+        //- Collisions
+        dots.forEach(dot2 => {
+            if(dot.id !== dot2.id) {
+                if(dot.x > dot2.x - dot.radius && dot.x < dot2.x + dot.radius) {
+                    if(dot.y > dot2.y - dot.radius && dot.y < dot2.y + dot.radius) {
+                        dot.speedX = -dot.speedX;
+                        dot.speedY = -dot.speedY;
+                        dot2.speedX = -dot2.speedX;
+                        dot2.speedY = -dot2.speedY;
+                    }
+                }
+            }
+        })
     })
 }
 
