@@ -66,6 +66,15 @@ nav a {
     padding-right: 15%;
 }
 
+#greeting {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px;
+}
+
 @media (max-width: 600px) {
     #latest-posts {
         padding-left: 5%;
