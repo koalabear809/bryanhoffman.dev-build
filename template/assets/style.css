@@ -19,7 +19,7 @@ nav a {
 }
 
 #content {
-    padding: 5px;
+    padding: 10px;
 }
 
 .post-preview {
@@ -34,9 +34,8 @@ nav a {
     color: white;
 }
 
-#latest-posts a:hover {
-    text-decoration: none;
-    color: black;
+#latest-posts-header {
+    text-align: center;
 }
 
 .post-preview:hover {
@@ -46,4 +45,35 @@ nav a {
 
 .separator {
     border-bottom: 1px dashed white;
+}
+
+#latest-posts {
+    display: flex;
+    flex-direction: column;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.post-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.post-content {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+@media (max-width: 600px) {
+    #latest-posts {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .post-content {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
 }

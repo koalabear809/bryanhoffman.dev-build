@@ -6,6 +6,29 @@ import { marked } from 'marked';
 
 console.log("compiling...");
 
+Handlebars.registerHelper("longdate", function (dateString) {
+    const date = new Date(dateString.replace(/\//g, '-')); // Replace / with - for better parsing
+
+    // Extract components
+    const year = date.getFullYear();
+    const month = date.toLocaleString('default', { month: 'long' });
+    const day = date.getDate();
+
+    // Function to get ordinal suffix
+    function getOrdinalSuffix(day) {
+        if (day > 3 && day < 21) return "th"; // Handles 11th - 13th
+        switch (day % 10) {
+            case 1: return "st";
+            case 2: return "nd";
+            case 3: return "rd";
+            default: return "th";
+        }
+    }
+
+    const formattedDate = `${month} ${day}${getOrdinalSuffix(day)}, ${year}`;
+    return formattedDate;
+});
+
 let templates = "template";
 let output = "output";
 let posts = [
@@ -101,5 +124,7 @@ fs.writeFileSync(`${output}/posts.html`, postsPage);
 
 //- move assets to output folder
 fs.cp(`${templates}/assets`, `${output}/assets`, {recursive: true}, err => {
-    console.log(err);
+    // console.log(err);
 });
+
+console.log("done!");
